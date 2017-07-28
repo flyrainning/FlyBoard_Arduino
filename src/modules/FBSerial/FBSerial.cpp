@@ -45,6 +45,7 @@ void FBSerial::bind(int RX,int TX,long baudrate) {
 void FBSerial::bind(long baudrate) {
   HS=&Serial;
   type=Hard;
+  begin(baudrate);
 }
 void FBSerial::bindAlt() {
   AS=new AltSoftSerial();
