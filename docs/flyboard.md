@@ -11,7 +11,7 @@
 			- [STL](#stl)
 			- [ArduinoJson](#arduinojson)
 			- [Timer](#timer)
-			- [FBSettings](#fbsettings)
+			- [[FBSettings](System/FBSettings.md)](#fbsettingssystemfbsettingsmd)
 			- [Debug](#debug)
 			- [algorithm](#algorithm)
 		- [FBSerial](#fbserial)
@@ -48,7 +48,7 @@
 
 对定时功能的再次封装，提供更方便的计数，计时执行的功能
 
-#### FBSettings
+#### [FBSettings](System/FBSettings.md)
 
 提供统一的配置管理功能，通过结构体封装配置功能，支持插件扩展
 
