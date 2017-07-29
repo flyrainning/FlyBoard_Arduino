@@ -26,7 +26,7 @@ enum CMDTYPE {
  };
  struct Cmd_Frame{
    bool result=false;
-   unsigned int id=0;
+   uint16_t id=0;
    CMDTYPE type=CMD_SYN;
    String addr_t="0000";
    String addr_s="0000";
