@@ -86,7 +86,7 @@ struct FBSettings
      }
    };
    unsigned int _getSize(){
-     return this->_save_size;
+     return this->_save_size+2;
    };
    void _setSize(unsigned int size){
      if (size<=SETTINGS_EEPROM_MAXSIZE)

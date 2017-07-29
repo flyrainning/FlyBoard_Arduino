@@ -4,7 +4,7 @@
 
 typedef struct Settings:
   virtual public FBSettings,
-  //如果有其他插件，在这里继承所有插件的配置
+  //如果有其他插件，在这里继承所有其他插件的配置
   virtual public Settings_FBCmd
 {
 uint16_t  _version=1;//配置版本，若版本号与EEPROM中保存的不同，则使用默认配置
@@ -28,7 +28,7 @@ Settings setting;
 
 void setup() {
 
-Serial.begin(115200);
+ Serial.begin(115200);
 
  Serial.println(setting.c);
  setting.boolvalue=false;

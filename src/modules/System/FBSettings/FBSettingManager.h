@@ -1,4 +1,7 @@
 
+//这是采用配置管理器的版本，弃用
+//保留此文件仅供参考
+
 #ifndef _FBSETTINGSMANAGER_H_
 #define _FBSETTINGSMANAGER_H_
 
