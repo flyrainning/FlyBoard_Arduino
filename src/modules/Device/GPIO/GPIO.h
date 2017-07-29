@@ -21,7 +21,7 @@ public:
 	GPIO();
 	GPIO(String &pin);
 	GPIO(int _pin);
-	void load(int _pin);
+	void bind(int _pin);
 
 	void in();
 	void input();

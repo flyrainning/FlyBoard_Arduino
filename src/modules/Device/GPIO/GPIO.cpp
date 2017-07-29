@@ -8,12 +8,12 @@
 	}
 	GPIO::GPIO(String &_pin){
 		int __pin=_pin.toInt();
-		load(__pin);
+		bind(__pin);
 	}
 	GPIO::GPIO(int _pin){
-		load(pin);
+		bind(pin);
 	}
-	void GPIO::load(int _pin){
+	void GPIO::bind(int _pin){
 		pin=_pin;
 		output();
 	}
