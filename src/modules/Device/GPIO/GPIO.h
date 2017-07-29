@@ -1,7 +1,7 @@
 #ifndef FLYBOARD_GPIO
 #define FLYBOARD_GPIO
 
-#include <Arduino.h>
+#include "Arduino.h"
 
 
 
@@ -23,6 +23,9 @@ public:
 	GPIO(int _pin);
 	void bind(int _pin);
 
+	void A();//set analog
+	void D();//set digital
+
 	void in();
 	void input();
 	void out();
@@ -40,13 +43,9 @@ public:
 	bool isHIGH();
 	bool isLOW();
 
-	bool waitHIGH(long mx=-1);
-	bool waitLOW(long mx=-1);
-	bool waitFor(int wait,long mx=-1);
-
-
-
-
+	bool waitHIGH(long max_ms=-1);
+	bool waitLOW(long max_ms=-1);
+	bool waitFor(int wait,long max_ms=-1);
 
 
 

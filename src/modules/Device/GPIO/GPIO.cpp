@@ -17,6 +17,12 @@
 		pin=_pin;
 		output();
 	}
+	void GPIO::A(){
+		is_digital=false;
+	}
+	void GPIO::D(){
+		is_digital=true;
+	}
 	void GPIO::in(){
 		input();
 	}
@@ -80,24 +86,25 @@
 	}
 
 
-	bool GPIO::waitHIGH(long mx){
-		return waitFor(HIGH,mx);
+	bool GPIO::waitHIGH(long max_ms){
+		return waitFor(HIGH,max_ms);
 	}
 
-	bool GPIO::waitLOW(long mx){
-		return waitFor(LOW,mx);
+	bool GPIO::waitLOW(long max_ms){
+		return waitFor(LOW,max_ms);
 	}
-	bool GPIO::waitFor(int wait,long mx){
+	bool GPIO::waitFor(int wait,long max_ms){
 		bool res=true;
 		while(get() != wait){
 			//wmsleep(5);
-			if (mx>=0){
-				mx--;
-				if (mx==0){
+			if (max_ms>=0){
+				max_ms--;
+				if (max_ms==0){
 					res=false;
 					break;
 				}
 			}
+			delay(1);
 		}
 		return res;
 	}
