@@ -1,12 +1,6 @@
-# GPIO
+#include <Arduino.h>
+#include "flyboard.h"
 
-### 功能
-
-对IO的抽象层
-
-### 实例
-
-```
 GPIO d3(3);//pin 3
 
 void setup() {
@@ -52,4 +46,8 @@ void setup() {
 
 }
 
-```
+void loop() {
+
+  delay(500);
+
+}

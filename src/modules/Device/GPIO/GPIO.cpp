@@ -78,19 +78,19 @@
 	void GPIO::low(){
 			 digitalWrite(pin,LOW);
 	}
-	bool GPIO::isHIGH(){		//是否是高电平
+	bool GPIO::isHigh(){		//是否是高电平
 		return (get()==HIGH)?true:false;
 	}
-	bool GPIO::isLOW(){		//是否是低电平
+	bool GPIO::isLow(){		//是否是低电平
 		return (get()==LOW)?true:false;
 	}
 
 
-	bool GPIO::waitHIGH(long max_ms){
+	bool GPIO::waitHigh(long max_ms){
 		return waitFor(HIGH,max_ms);
 	}
 
-	bool GPIO::waitLOW(long max_ms){
+	bool GPIO::waitLow(long max_ms){
 		return waitFor(LOW,max_ms);
 	}
 	bool GPIO::waitFor(int wait,long max_ms){

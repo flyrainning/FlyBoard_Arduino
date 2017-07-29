@@ -40,11 +40,11 @@ public:
 
 	void high();
 	void low();
-	bool isHIGH();
-	bool isLOW();
+	bool isHigh();
+	bool isLow();
 
-	bool waitHIGH(long max_ms=-1);
-	bool waitLOW(long max_ms=-1);
+	bool waitHigh(long max_ms=-1);
+	bool waitLow(long max_ms=-1);
 	bool waitFor(int wait,long max_ms=-1);
 
 
