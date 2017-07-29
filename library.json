@@ -1,0 +1,22 @@
+{
+  "name": "FlyBoard_Arduino",
+  "keywords": "flyboard, arduino, cmd, serial",
+  "description": "A base framework for arduino",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/flyrainning/FlyBoard_Arduino.git"
+  },
+  "version": "0.1.0",
+  "authors": {
+    "name": "flyrainning",
+    "url": "https://www.fengpiao.net"
+  },
+  "exclude": [
+    "fuzzing",
+    "scripts",
+    "test",
+    "third-party"
+  ],
+  "frameworks": "arduino",
+  "platforms": "*"
+}
