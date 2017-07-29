@@ -1,6 +1,6 @@
 
-#ifndef _SETTINGS_H_
-#define _SETTINGS_H_
+#ifndef _FBSETTINGS_H_
+#define _FBSETTINGS_H_
 #include "Arduino.h"
 
 #include "EEPROM.h"
@@ -16,7 +16,7 @@
 
 
 #ifndef SETTINGS_VERSION_INT
-  #define SETTINGS_VERSION_INT            1  //
+  #define SETTINGS_VERSION_INT            1  //default version
 #endif
 
 //struct FBSettings
@@ -51,7 +51,6 @@ struct FBSettings
          _save_size=_save_size_tmp;
          _setting=_setting_tmp;
        }else{//保存默认配置
-
          save();
        }
      }
@@ -114,7 +113,6 @@ struct FBSettings
 
 
 };
-
 
 
 
