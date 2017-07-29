@@ -16,10 +16,10 @@ __AVR_ATmega2560__
 #define OUTPUT_COMPARE_C_PIN		44 // unusable PWM
 */
 
-#include "../../config.h"
+#include "Arduino.h"
+#include <SoftwareSerial.h>
 
 #include "AltSoftSerial.h"
-
 
 
 class FBSerial
@@ -33,6 +33,7 @@ class FBSerial
 	public:
 
 		FBSerial();
+		~FBSerial();
 		FBSerial(SoftwareSerial &_S);
 		FBSerial(HardwareSerial &_S);
 		FBSerial(AltSoftSerial &_S);
@@ -46,7 +47,7 @@ class FBSerial
 		void bindAlt();
 		void bindAlt(long baudrate);
 
-		virtual ~FBSerial();
+
 
 
 		void begin(long speed);

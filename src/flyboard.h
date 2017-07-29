@@ -17,20 +17,21 @@
 
 #endif
 
+#ifdef modules_device
+  #include "modules/Device/GPIO/GPIO.h"
 
-//opencv
+#endif
+
+#ifdef modules_FBSerial
+	#include "modules/FBSerial/FBSerial.h"
+#endif
+
 #ifdef modules_FBCmd
 	#include "modules/FBCmd/FBCmd.h"
   #include "modules/FBCmd/FBCmd_base.h"
 #endif
 
 
-//device
-#ifdef modules_device
-  #include "modules/Device/GPIO/GPIO.h"
-
-
-#endif
 
 
 

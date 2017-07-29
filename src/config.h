@@ -8,10 +8,10 @@
 
 #define modules_system
 #define modules_device
+#define modules_FBSerial
 #define modules_FBCmd
 
 
 
-#define FB_NAME_SPACE fb
 
 #endif
