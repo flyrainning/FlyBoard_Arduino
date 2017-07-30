@@ -118,11 +118,14 @@ enum CMDTYPE {
       //解析
       Cmd_Frame receive(char receiveVal);
       Cmd_Frame parse(String &cmd);
+      Cmd_Frame parse(const char *cmd);
 
       //运行命令
       Cmd_Frame run(Cmd_Frame &cf);
+      String run(String cmd,String data);
       //运行回调
       void runACK(Cmd_Frame &cf);
+      void runACK(String cmd,String data);
 
       //序列化
       String stringify(Cmd_Frame &cf,bool completely=false);

@@ -147,7 +147,10 @@ Cmd_Frame FBCmd::receive(char receiveVal) {
     return receive_cf;
 
 }
-
+Cmd_Frame FBCmd::parse(const char *cmd){
+  String str(cmd);
+  return parse(str);
+}
 Cmd_Frame FBCmd::parse(String &cmd){
   cmd.trim();
   Cmd_Frame cf;
@@ -264,6 +267,7 @@ String FBCmd::stringify(Cmd_Frame &cf,bool completely){
 
   return str;
 }
+
 Cmd_Frame FBCmd::run(Cmd_Frame &cf){
 
 
@@ -289,6 +293,19 @@ Cmd_Frame FBCmd::run(Cmd_Frame &cf){
   }
   return rcf;
 }
+String FBCmd::run(String cmd,String data){
+  String res="";
+  Cmd_Frame cf;
+  cf.result=true;
+  cf.cmd=cmd;
+  cf.data=data;
+  Cmd_Frame result=run(cf);
+  if (result.result){
+    res=result.data;
+  }
+  return res;
+}
+
 void FBCmd::runACK(Cmd_Frame &cf){
 
   if ((cf.result)&&(cf.type==CMD_ACK)){
@@ -302,6 +319,14 @@ void FBCmd::runACK(Cmd_Frame &cf){
     }
   }
 
+}
+void FBCmd::runACK(String cmd,String data){
+  Cmd_Frame cf;
+  cf.result=true;
+  cf.type=CMD_ACK;
+  cf.cmd=cmd;
+  cf.data=data;
+  runACK(cf);
 }
 std::vector<Cmd_Map> FBCmd::getFunc(String &key) {
   std::vector<Cmd_Map> flist;
