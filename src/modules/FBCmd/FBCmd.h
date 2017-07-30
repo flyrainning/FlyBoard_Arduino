@@ -133,6 +133,8 @@ enum CMDTYPE {
 
       void serialOut(Cmd_Frame rcf,bool completely=false);
       void serialOut(String data);
+      void send(Cmd_Frame rcf,bool completely=false);
+      void send(String data);
 
       //loop
       void loop();

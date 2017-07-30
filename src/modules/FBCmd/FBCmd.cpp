@@ -348,6 +348,12 @@ void FBCmd::serialOut(String data){
     serial->write(data.charAt(i));
   }
 }
+void FBCmd::send(Cmd_Frame rcf,bool completely=false){
+  serialOut(rcf,completely);
+}
+void send(String data){
+  serialOut(data);
+}
 void FBCmd::loop(){
   while(serial->available()){
     loop_cf=receive(serial->read());
