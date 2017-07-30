@@ -73,7 +73,7 @@ void FBCmd::bind(FBSerial &_serial,Settings_FBCmd &_setting){
 void FBCmd::set_Endchar(uint8_t c1,uint8_t c2){
   setting->end_char[0]=c1;
   setting->end_char[1]=c2;
-//  setting->save();
+  setting->save();
 }
 String FBCmd::get_address(){
   String addr;
@@ -86,11 +86,11 @@ void FBCmd::set_address(String address){
   for (size_t i = 0; i < 4; i++) {
     setting->address[i]=address.charAt(i);
   }
-//  setting->save();
+  setting->save();
 }
 void FBCmd::quiet(bool enable){
   setting->quiet=enable;
-//  setting->save();
+  setting->save();
 }
 void FBCmd::quiet(String enable){
   bool enablebol=(enable=="true")?true:false;
@@ -98,7 +98,7 @@ void FBCmd::quiet(String enable){
 }
 void FBCmd::echo(bool enable){
   setting->echo=enable;
-//  setting->save();
+  setting->save();
 }
 
 void FBCmd::echo(String enable){
