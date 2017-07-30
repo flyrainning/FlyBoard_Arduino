@@ -1,12 +1,12 @@
 # FBCmd
 
-### 功能
+## 功能
 
 FBCmd提供了一个简单的串口交互式命令行接口
 
 可以实现人机命令行交互或设备与设备间的串口通讯
 
-#### 特点
+## 特点
 
 - 定义标准的命令结构，支持接收命令和应答
 - 支持自定义设备地址，支持一对一，一对多，多对一通讯，支持广播
@@ -15,12 +15,12 @@ FBCmd提供了一个简单的串口交互式命令行接口
 - 支持命令应答回调
 - 支持CRC校验
 
-### 依赖
+## 依赖
 
 - FBSettings
 - FBSerial
 
-### 可选配置
+## 可选配置
 
 ```
   //单条命令的最大长度
@@ -36,7 +36,7 @@ FBCmd提供了一个简单的串口交互式命令行接口
   #define CMD_FLAG_END ';'
 ```
 
-### 命令发送与接受
+## 命令发送与接受
 
 通讯是以帧为单位，帧分为命令帧和应答帧
 
@@ -60,7 +60,7 @@ FBCmd内部会自动将字符串帧解析为Cmd_Frame结构体
 | crc            | 可选 | crc16                          | 16bit HEX         | 如果存在，则校验，失败直接丢弃            |
 
 
-#### 示例
+### 示例
 
 以下命令和应答都是合法帧
 
@@ -75,7 +75,7 @@ FBCmd内部会自动将字符串帧解析为Cmd_Frame结构体
 - +0000:0000:cmd1(data);
 - +A001:C001:switch1(on);
 
-#### 规则
+### 规则
 
 - 命令帧包含{id}，则应答帧也包含{id}，值为id+1
 - 命令或应答如果包含crc，则crc校验失败自动丢弃
@@ -93,7 +93,7 @@ FBCmd内部会自动将字符串帧解析为Cmd_Frame结构体
 收到应答帧，会调用命令对应的回调函数，回调函数常用于设备间通讯，发送查询指令后接收并处理结果
 
 
-### 配置参数
+## 配置参数
 
 FBCmd包含一个配置结构体`Settings_FBCmd`，使用时需要在自己的配置子对象中继承这个结构体
 
@@ -123,11 +123,11 @@ void* Cmd=NULL;
 
 ```
 
-### 命令的添加
+## 命令的添加
 
 FBCmd内部存在一个包含所有命令的列表，称为map，要将自己的函数添加为FBCmd支持的命令，需要调用`void add_map(Cmd_Map _map)`
 
-#### Cmd_Map
+### Cmd_Map
 
 添加到map中的是Cmd_Map结构
 
@@ -144,25 +144,25 @@ struct Cmd_Map{
 | func     | 命令执行的函数，收到CMD_SYN请求调用此函数 |
 | callback | 应答回调函数，收到CMD_ACK请求调用此函数   |
 
-##### funcP
+#### funcP
 
 命令函数`typedef void (*funcP)(Cmd_Frame &input,Cmd_Frame &output);`
 
-###### Cmd_Frame &input
+##### Cmd_Frame &input
 
 命令解析完毕后的Cmd_Frame结构
 
-###### Cmd_Frame &output
+##### Cmd_Frame &output
 
 应答帧，由命令执行函数填充，函数执行完毕，若帧有效，自动发送应答
 
-##### funcPcallback
+#### funcPcallback
 
 回调函数`typedef void (*funcPcallback)(Cmd_Frame &input);`
 
 
 
-##### 实例
+#### 实例
 
 ```
 

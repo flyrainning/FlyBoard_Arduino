@@ -1,15 +1,15 @@
 # FBSerial
 
-### 功能
+## 功能
 提供统一的串口抽象，实现HardwareSerial、SoftwareSerial和AltSoftSerial混用，并可在使用过程中更换。
 
 > 关于 [AltSoftSerial](https://github.com/PaulStoffregen/AltSoftSerial)
 
-### 使用方法
+## 使用方法
 
 实例化FBSerial，调用bind()与已知的HardwareSerial、SoftwareSerial或AltSoftSerial进行绑定，即可像使用普通串口一样使用FBSerial
 
-### 实例
+## 实例
 
 ```
 
@@ -47,9 +47,9 @@ void setup() {
 
 ```
 
-### 主要方法
+## 主要方法
 
-#### void bind
+### void bind
 
 绑定到已经存在的串口，可以有以下形式
 ```
@@ -61,10 +61,10 @@ void bind(int RX,int TX,long baudrate=9600);
 void bind(long baudrate=9600);
 
 ```
-#### void bindAlt()
+### void bindAlt()
 
 创建并绑定AltSoftSerial
 
-#### void begin(long speed)
+### void begin(long speed)
 
 若绑定的串口没有调用过begin()，需调用以便打开串口
