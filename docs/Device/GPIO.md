@@ -53,3 +53,65 @@ void setup() {
 }
 
 ```
+
+### 主要方法
+
+#### GPIO(int _pin);
+
+实例化并直接绑定到一个IO口
+
+#### void bind(int _pin);
+
+绑定到一个IO口
+
+#### void A();
+
+设置为模拟模式
+
+#### void D();
+
+设置为数字模式，初始化默认为数字模式
+
+#### void input();
+
+设置为输入模式
+
+#### void output();
+
+设置为输出模式
+
+#### void pullup();
+
+设置为带内部上拉的输入模式
+
+#### void set(int c);
+
+设置电平
+
+#### int get();
+
+获取电平
+
+#### void high();
+
+设置为高电平
+
+#### void low();
+
+设置为低电平
+
+#### bool isHigh();
+
+当前是否是高电平，高电平返回true
+
+#### bool isLow();
+
+当前是否是底电平，底电平返回true
+
+#### bool waitHigh(long max_ms=-1);
+
+等待，直到IO输入为高电平后返回true，可设置超时时间，超时后返回false
+
+#### bool waitLow(long max_ms=-1);
+
+等待，直到IO输入为底电平后返回true，可设置超时时间，超时后返回false

@@ -53,12 +53,12 @@ enum CMDTYPE {
   struct Settings_FBCmd:virtual public FBSettings
   {
     bool echo=false;//是否启用输入回显
-    bool quiet=false;//是否启用安静模式，安静模式无任何返回
-    char address[4]={'0','0','0','0'};
-    char end_char[2]={0,0};
+    bool quiet=false;//是否启用安静模式，安静模式无任何返回，包括应答帧也不会发送
+    char address[4]={'0','0','0','0'};//当前设备地址
+    char end_char[2]={0,0};//帧结束附加发送的结束字符，如回车符
     bool auto_crc=true;//发送消息自动添加crc校验
-    bool required_crc=false;//解析消息必须验证crc
-    void* Cmd=NULL;
+    bool required_crc=false;//解析消息必须验证crc，如果为true，没有crc的命令帧将被丢弃
+    void* Cmd=NULL;//指向当前FBCmd实例的指针
 
   };
 

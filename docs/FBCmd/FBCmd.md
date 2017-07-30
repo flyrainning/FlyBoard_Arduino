@@ -38,7 +38,14 @@ FBCmd提供了一个简单的串口交互式命令行接口
 
 ### 命令发送与接受
 
-命令帧与应答帧采用相同的格式
+通讯是以帧为单位，帧分为命令帧和应答帧
+
+出于兼容性考虑，帧在通讯过程中采用字符串模式
+
+FBCmd内部会自动将字符串帧解析为Cmd_Frame结构体
+
+
+字符串模式下，命令帧与应答帧采用相同的格式
 
 `<type>[{id}][target_address:][source_address:]cmd([data])[:crc];`
 
@@ -54,6 +61,8 @@ FBCmd提供了一个简单的串口交互式命令行接口
 
 
 #### 示例
+
+以下命令和应答都是合法帧
 
 命令：
 
@@ -84,4 +93,120 @@ FBCmd提供了一个简单的串口交互式命令行接口
 收到应答帧，会调用命令对应的回调函数，回调函数常用于设备间通讯，发送查询指令后接收并处理结果
 
 
-### 配置
+### 配置参数
+
+FBCmd包含一个配置结构体`Settings_FBCmd`，使用时需要在自己的配置子对象中继承这个结构体
+
+配置项目：
+
+```
+//是否启用输入回显
+bool echo=false;
+
+//是否启用安静模式，安静模式无任何返回，包括应答帧也不会发送
+bool quiet=false;
+
+//当前设备地址
+char address[4]={'0','0','0','0'};
+
+//帧结束附加发送的结束字符，如回车符
+char end_char[2]={0,0};
+
+//发送消息自动添加crc校验
+bool auto_crc=true;
+
+//解析消息必须验证crc，如果为true，没有crc的命令帧将被丢弃
+bool required_crc=false;
+
+//指向当前FBCmd实例的指针
+void* Cmd=NULL;
+
+```
+
+### 命令的添加
+
+FBCmd内部存在一个包含所有命令的列表，称为map，要将自己的函数添加为FBCmd支持的命令，需要调用`void add_map(Cmd_Map _map)`
+
+#### Cmd_Map
+
+添加到map中的是Cmd_Map结构
+
+```
+struct Cmd_Map{
+      String name;
+      funcP func;
+      funcPcallback callback;
+};
+```
+
+|   name   |    命令名称    |
+| -------- | -------------- |
+| func     | 命令执行的函数，收到CMD_SYN请求调用此函数 |
+| callback | 应答回调函数，收到CMD_ACK请求调用此函数   |
+
+##### funcP
+
+命令函数`typedef void (*funcP)(Cmd_Frame &input,Cmd_Frame &output);`
+
+###### Cmd_Frame &input
+
+命令解析完毕后的Cmd_Frame结构
+
+###### Cmd_Frame &output
+
+应答帧，由命令执行函数填充，函数执行完毕，若帧有效，自动发送应答
+
+##### funcPcallback
+
+回调函数`typedef void (*funcPcallback)(Cmd_Frame &input);`
+
+
+
+##### 实例
+
+```
+
+typedef struct Settings:
+  virtual public Settings_FBCmd
+{
+uint16_t  _version=1;
+  Settings(){
+    bind(this,sizeof(*this),_version);
+  }
+}Settings;
+
+void cmd1(Cmd_Frame &input,Cmd_Frame &output){
+  String p=input.data;
+  output.out("I'm cmd2");
+
+}
+void callback(Cmd_Frame &input){
+  String p=input.data;
+  if (p=="something"){
+    //do something
+  }
+
+}
+
+void setup() {
+  FBCmd Cmd;
+  Settings setting;
+  FBSerial serial;
+
+  serial.bind(115200);
+  Cmd.bind(serial,setting);
+
+
+  //添加命令
+  struct Cmd_Map m[]={
+   {"cmd1",&cmd1},
+   {"cmd3",&cmd1,&callback},
+  };
+  Cmd.add_map(m,sizeof(m));
+
+  //或者逐条添加
+  Cmd.add_map(Cmd_Map{"cmd4",&cmd1,&callback});
+
+
+}
+```
