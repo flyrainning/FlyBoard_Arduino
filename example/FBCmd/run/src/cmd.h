@@ -8,7 +8,7 @@ public:
     String p=input.data;
 
     output.out("I'm cmd1");
-    output.data+=" receive"+p;
+    output.data+=" receive "+p;
   }
 
 

@@ -8,7 +8,7 @@ public:
     String p=input.data;
 
     output.out("I'm cmd1");
-    output.data+=" receive"+p;
+    output.data+=" receive "+p;
   }
 
 
@@ -23,6 +23,11 @@ void callback(Cmd_Frame &input){
   String p=input.data;
   if (p=="something"){
     //do something
+    status=1;
+    serial.println();
+    serial.println("callback:");
+    serial.println(p);
+    serial.println();
   }
 
 }

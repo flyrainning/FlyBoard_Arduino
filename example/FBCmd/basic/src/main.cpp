@@ -1,6 +1,6 @@
 #include "setting.h"
 
-
+int status=0;
 FBCmd Cmd;
 Settings setting;
 FBSerial serial;
