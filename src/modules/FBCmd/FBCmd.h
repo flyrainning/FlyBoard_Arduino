@@ -82,6 +82,7 @@ enum CMDTYPE {
       CRC16 crc16;
 
       static void null(Cmd_Frame &input){};
+      static void null(Cmd_Frame &input,Cmd_Frame &output){output.result=false;};
 
       FBCmd();
       ~FBCmd();
