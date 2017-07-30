@@ -6,8 +6,6 @@ Settings setting;
 FBSerial serial;
 
 
-#include "cmd.h"
-
 
 void setup() {
 
@@ -19,73 +17,45 @@ void setup() {
   serial.println("start bind");
   Cmd.bind(serial,setting);
 
-  //添加命令列表，两种方式
-  serial.println("add cmd");
-  struct Cmd_Map m[]={
-   {"cmd1",&cmd_class::cmd1},
-   {"cmd2",&cmd2,&FBCmd::null},
-   {"cmd3",&cmd2,&callback},
-  };
-  Cmd.add_map(m,sizeof(m));
 
-  Cmd.add_map(Cmd_Map{"cmd4",&cmd_class::cmd1,&callback});
+  Cmd_Frame cf;
 
-  //可以通过配置对象直接修改CMD配置，控制程序行为
-  setting.echo=true;//打开回显
-  setting.quiet=false;//发送响应
-  setting.save();
+  cf.id=23;
+  cf.cmd="cmd1";
+  cf.data="fds,efffd,sdfes,dfdfes,sdf";
+  cf.addr_s="re53";
+  cf.addr_t="2342";
 
-  //Debug
-  Cmd.Debug_setting();
-  Cmd.Debug_map();
-
-  delay(2000);
+  Serial.println("stringify:");
+  String ss=Cmd.stringify(cf);
+  Serial.println(ss);
+  /*
+  stringify:
+  -{23}2342:re53:cmd1(fds,efffd,sdfes,dfdfes,sdf):A5A1;
+  */
 
 
+  Serial.println("cf:");
+  String c="-{12}1234:432a:cmd2(data of cmd2);";
+  Cmd_Frame cc=Cmd.parse(c);
+  Cmd.Debug_CF(cc);
+  /*
+  cf:
+  Debug Cmd_Frame -----------------
+  result : 1
+  id : 12
+  type : 0
+  addr_t : 1234
+  addr_s : 432a
+  cmd : cmd2
+  data : data of cmd2
+  status : 0
+  crc : 0
+  -----------------
+  */
 
 
 
-
-
-
-
-
-
-
-
-// Cmd_Frame cf;
-//
-// cf.id=23;
-// cf.id++;
-// cf.cmd="cmddd";
-// cf.data="fds,efffd,sdfes,dfdfes,sdf";
-// cf.addr_s="re53";
-// cf.addr_t="2345664";
-//
-// Serial.println("stringify:");
-// String ss=Cmd.stringify(cf);
-// Serial.println(ss);
-//
-// Serial.println("cf:");
-// String c="";
-// c="+{}cd(1):C123;";
-// Cmd_Frame cc=Cmd.parse(c);
-// Cmd.Debug_CF(cc);
-
-
-// Cmd.run(cf);
-
-// Serial.print("freeMemory()=");
-//     Serial.println(freeMemory());
-// String cmd="asdf";
-// int index=cmd.indexOf(':');
-// Serial.println(index);
-
-
-//Cmd_Map fm={"set",&f};
-//  CMDList.push_back(Cmd_Map{"set",&f});
-//    CMDList.push_back(fm);
-//  l.push_back(struct Cmd_Map{"set",&f});
 
 }
 
