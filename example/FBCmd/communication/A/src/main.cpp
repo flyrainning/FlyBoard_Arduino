@@ -4,91 +4,78 @@
 FBCmd Cmd;
 Settings setting;
 FBSerial serial;
+FBSerial conn;
 
+Timer timer1;
+Timer timer2;
+Timer timer3;
 
-#include "cmd.h"
+int sum=0;
+
+//000B和000C返回的结果进行处理
+void callback(Cmd_Frame &input){
+  if (input.result){
+    String value=input.data;
+    int val=value.toInt();
+
+    if (input.addr_s=="000B"){//判断数据来自哪个设备
+      sum+=val;
+    }
+    if (input.addr_s=="000C"){
+      sum+=val*2;
+    }
+
+  }
+}
+
+//发送命令
+void send(String target_address){
+  Cmd_Frame cf;
+  cf.addr_t=target_address;
+  cf.addr_s=Cmd.get_address();
+  cf.cmd="get_value";
+  Cmd.serialOut(cf);
+}
 
 
 void setup() {
 
-  //初始化串口
+  //初始化串口，用于调试
   serial.bind(115200);
+
+  //初始化与子设备通讯的软串口
+  conn.bind(3,4,9600);
 
 
   //FBCmd绑定
-  serial.println("start bind");
-  Cmd.bind(serial,setting);
+  Cmd.bind(conn,setting);
 
-  //添加命令列表，两种方式
-  serial.println("add cmd");
-  struct Cmd_Map m[]={
-   {"cmd1",&cmd_class::cmd1},
-   {"cmd2",&cmd2,&FBCmd::null},
-   {"cmd3",&cmd2,&callback},
-  };
-  Cmd.add_map(m,sizeof(m));
+  //添加命令列表，本机发送get_value命令，接收应答
+  Cmd.add_map(Cmd_Map{"get_value",&FBCmd::null,&callback});
 
-  Cmd.add_map(Cmd_Map{"cmd4",&cmd_class::cmd1,&callback});
-
-  //可以通过配置对象直接修改CMD配置，控制程序行为
-  setting.echo=true;//打开回显
-  setting.quiet=false;//发送响应
+  //设置本机地址
+  Cmd.set_address("000A");
+  //设备间通讯，为防止干扰，应关闭回显
+  setting.echo=false;
+  setting.quiet=false;
   setting.save();
 
-  //Debug
-  Cmd.Debug_setting();
-  Cmd.Debug_map();
-
-  delay(2000);
-
-
-
-
-
-
-
-
-
-
-
-
-
-// Cmd_Frame cf;
-//
-// cf.id=23;
-// cf.id++;
-// cf.cmd="cmddd";
-// cf.data="fds,efffd,sdfes,dfdfes,sdf";
-// cf.addr_s="re53";
-// cf.addr_t="2345664";
-//
-// Serial.println("stringify:");
-// String ss=Cmd.stringify(cf);
-// Serial.println(ss);
-//
-// Serial.println("cf:");
-// String c="";
-// c="+{}cd(1):C123;";
-// Cmd_Frame cc=Cmd.parse(c);
-// Cmd.Debug_CF(cc);
-
-
-// Cmd.run(cf);
-
-// Serial.print("freeMemory()=");
-//     Serial.println(freeMemory());
-// String cmd="asdf";
-// int index=cmd.indexOf(':');
-// Serial.println(index);
-
-
-//Cmd_Map fm={"set",&f};
-//  CMDList.push_back(Cmd_Map{"set",&f});
-//    CMDList.push_back(fm);
-//  l.push_back(struct Cmd_Map{"set",&f});
 
 }
 
 void loop() {
   Cmd.loop();
+  if (timer1.every_ms(3000)){
+    //向000B发送命令
+    send("000B");
+  }
+  if (timer2.every_ms(5000)){
+    //向000C发送命令
+    send("000C");
+  }
+  if (timer3.every_ms(2000)){//每2秒向串口输出调试结果
+    serial.print("now sum is :");
+    serial.println(sum);
+  }
+
 }
