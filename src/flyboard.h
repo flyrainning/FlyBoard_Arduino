@@ -28,7 +28,7 @@
 
 #ifdef modules_FBCmd
 	#include "modules/FBCmd/FBCmd.h"
-  #include "modules/FBCmd/FBCmd_base.h"
+  #include "modules/FBCmd/FBCmd_Plugin.h"
 #endif
 
 

@@ -351,7 +351,7 @@ void FBCmd::serialOut(String data){
 void FBCmd::send(Cmd_Frame rcf,bool completely=false){
   serialOut(rcf,completely);
 }
-void send(String data){
+void FBCmd::send(String data){
   serialOut(data);
 }
 void FBCmd::loop(){
